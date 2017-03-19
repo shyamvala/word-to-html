@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block body %}
+  <section>
+    <a href="{{url_for('documents')}}">Back to all documents</a>
+  </section>
+  <section class="top-header-section">
+    <p class="{{ document.header().type }}">{{ document.header().content }}</p>
+    {% for s in document.header().sections %}
+      <p class="{{ s.type }}">{{ s.content }}</p>
+    {% endfor %}
+  </section>
+  {% for sh in document.subheaders() %}
+    <section class="sub-header-section">
+      <p class="{{ sh.type }}">{{ sh.content }}</p>
+      {% for s in sh.sections %}
+        <p class="{{ s.type }}">{{ s.content }}</p>
+      {% endfor %}
+    </section>
+  {% endfor %}
+{% endblock %}

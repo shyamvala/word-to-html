@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+<section>
+  <form name="uploadForm" action="{{ url_for('documents')}}" method="POST" enctype=multipart/form-data>
+    <p>
+      <input id="word-file" type="file" name="file"/>
+      <input type="submit" value="Upload file">
+    </p>
+  </form>
+</section>
+<ul>
+  {% for d in documents %}
+    <li><a href={{url_for('document',id=d.id)}}>{{ d.header().content }}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}
