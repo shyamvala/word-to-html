@@ -1,6 +1,6 @@
 from mongoengine import *
-import src.word_to_json as WordToJson
-from src.section import Section
+import app.src.word_to_json as WordToJson
+from app.src.section import Section
 import json
 import datetime
 

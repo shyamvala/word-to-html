@@ -1,6 +1,6 @@
 import os
-from src.document import Document
-from src.document import document_from_file
+from app.src.document import Document
+from app.src.document import document_from_file
 from flask import Flask
 from flask_mongoengine import MongoEngine, MongoEngineSessionInterface
 from flask import flash
@@ -10,22 +10,17 @@ from flask import render_template
 from flask import abort, redirect, url_for
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = '/tmp/'
 ALLOWED_EXTENSIONS = set(['xml'])
-SECRET_KEY = 'many random bytes'
 
 app = Flask(__name__)
-
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['SECRET_KEY'] = SECRET_KEY
-app.config['MONGODB_DB'] = 'worddb'
-
+app.config.from_object('config')
 db = MongoEngine()
 db.init_app(app)
 app.session_interface = MongoEngineSessionInterface(db)
 
 @app.route('/')
 def index():
+    app.logger.info('HomePage requested')
     return redirect(url_for('home'))
 
 @app.route('/home', methods=['GET'])
@@ -84,6 +79,3 @@ def documents():
 @app.route('/documents/<id>', methods=['GET'])
 def document(id):
     return get_document(request,id)
-
-if __name__ == '__main__':
-    app.run(debug=True)
